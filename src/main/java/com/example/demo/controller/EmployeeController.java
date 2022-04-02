@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +27,13 @@ import com.example.demo.repository.EmployeeRepository;
 
 @RestController
 @RequestMapping("/api/v1/")
-@CrossOrigin("*")
 public class EmployeeController {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
 	//get all employees
 	@GetMapping("/employees")
+    @PreAuthorize("hasRole('Admin')")
 	public List<Employee> getAllEmployees(){
 		return employeeRepository.findAll();
 	}
